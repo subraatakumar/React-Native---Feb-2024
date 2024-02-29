@@ -1,6 +1,7 @@
 # React-Native-Feb-2024-Private
 
-## Day01: Introduction to React native
+## Day 01: Induction
+## Day 02: Introduction to React native
 
 - Introduction to React Native
 - Styling in React Native
@@ -14,7 +15,7 @@
   - Using Platform Specific File Extension
 - Button 
 
-## Day02 : Native Elements - 1
+## Day 03 : Importance of Expo & Native Elements - 1
 
 - Expo and React Native
 - Custom Buttons using Touchable Opacity and Pressable
@@ -24,3 +25,16 @@
   - Difference between Touchable and Pressable
   - Which to be used touchable or Pressable
 - TextInput in React Native
+
+## Day 04: React Native Elements - 2
+## Day 05: React Native Elements - 3
+## Day 06: Navigation in React Native
+## Day 07: Advance Navigation in React Native
+## Day 08: API Integration in React Native
+## Day 09: Persist in React Native
+## Day 10: Central Store in React Native
+## Day 11: Social Media Authentication
+## Day 12: Sensor and Location
+## Day 13: Camera and Text to Speech
+## Day 14: Important Libraries
+## Day 15: PSC
