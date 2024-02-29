@@ -5,6 +5,7 @@
   - Inline
   - Internal
   - External
+- Sample App using TypeScript
 - Display Flex Property
 - Platform Specific Code
   - Using Platform Module
