@@ -1,3 +1,5 @@
+# React-Native-Feb-2024-Private
+
 ## Day01: Introduction to React native
 
 - Introduction to React Native
@@ -10,15 +12,15 @@
 - Platform Specific Code
   - Using Platform Module
   - Using Platform Specific File Extension
-- Button
+- Button 
 
-# Coding:
+## Day02 : Native Elements - 1
 
-1. Live:
-   - Hello World App.
-   - Platform Specific UI App.
-
-2. Assignment:
-   - Create Interests Screen UI.
-   
-
+- Expo and React Native
+- Custom Buttons using Touchable Opacity and Pressable
+  - Touchable Opacity
+  - difference between Touchable Opacity, TouchableWithoutFeedback, TouchableNativeFeedback
+  - Pressable Component
+  - Difference between Touchable and Pressable
+  - Which to be used touchable or Pressable
+- TextInput in React Native
