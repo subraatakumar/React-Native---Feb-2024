@@ -5,6 +5,8 @@ I assume that you have a sound knowledge of JavaScript, ES6 and React. No prior 
 
 # Introduction
 
+### [presentation](https://docs.google.com/presentation/d/16hivx9VmvWTVdYmZ14kDu6DJH4XL6SmlTLjkicony38/edit?usp=sharing)
+
 Almost any business, especially B2C could benefit from creating App for their business. When we are thinking about app development we have take into consideration two major mobile operating systems Android and IOS. Android app can be developed using Java or Kotlin and IOS app can be developed using swift which is mostly written in C++. This type of development is called **Native Development**. There is an alternative to this which is called **Hybrid Development**. In **Hybrid Development** you have to develop using only one language or framework and it will run both on Android and IOS.
 
 In Hybrid Development there are two famous frameworks. React Native developed by facebook and Flutter developed by Google. 
