@@ -51,7 +51,22 @@ No need to remember, but have a look at the below table for better understanding
 | ScrollView |	ScrollView |	UIScrollView |	div (with scrolling) |
 | TextInput |	EditText |	UITextField |	input type="text" |
   
-  
+## Sample Function Component in Typescript
+
+```ts
+import React from 'react';
+import { Text, View } from 'react-native';
+
+const App: React.FC = () => {
+  return (
+    <View>
+      <Text>Hello, world!</Text>
+    </View>
+  );
+}
+
+export default App;
+```
 ## Styling in React Native
   
 All the react native core components accepts a prop named `style`. The value that is assigned to this prop is a JavaScript object of key value pairs. The key value pair is similar to property and value of CSS rule with one exception that CSS properties are written in camel case. For example, `background-color` is written as `backgroundColor`.
