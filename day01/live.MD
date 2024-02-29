@@ -49,3 +49,70 @@ const styles1 = StyleSheet.create({
   }
 })  
 ```  
+
+```
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
+import { useState } from 'react';
+
+function App() {
+  let names: string[];
+
+  names = ['Ramesh', 'Suresh'];
+  const [margin, setMargin] = useState(10);
+  let bordertype = 'g';
+  const handleButtonClick = () => {
+    setMargin((prev) => prev + 10);
+  };
+  return (
+    <View
+      style={{
+        marginTop: margin,
+      }}>
+      {names.map((name) => (
+        <Text
+          style={[
+            { flex: 1 },
+            styles.text,
+            bordertype == 'green'
+              ? styles.textBorderGreen
+              : styles.textBorderYellow,
+          ]}>
+          {name}
+        </Text>
+      ))}
+
+      <TouchableOpacity onPress={handleButtonClick}>
+        <View style={{ backgroundColor: 'purple', height: 50, width: 50 }}>
+          <Text>Button</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+export default App;
+
+const styles = StyleSheet.create({
+  text: {
+    backgroundColor: 'red',
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+  },
+  textBorderGreen: {
+    borderWidth: 3,
+    borderColor: 'green',
+  },
+  textBorderYellow: {
+    borderWidth: 3,
+    borderColor: 'yellow',
+  },
+});
+```
