@@ -50,7 +50,7 @@ const styles1 = StyleSheet.create({
 })  
 ```  
 
-```
+```js
 import {
   View,
   Text,
