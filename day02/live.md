@@ -1,3 +1,65 @@
+
+## App with touchable Button
+
+```js
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+
+const App = () => {
+  const x = [
+    "ramesh",
+    "suersh",
+    "mahesh",
+    "ganesh",
+    "yukti",
+    "sukhi",
+    "thiland",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five"
+  ];
+  const clickedItems = []
+
+  return (
+    <View>
+    <View style={{ flexDirection: "row", flexWrap:"wrap", marginTop:30,  }}>
+      {x.map((y) => (
+        <TouchableOpacity onPress={()=> clickedItems.push(y)}>
+        <Text style={{ borderRadius: 10, borderWidth: 0.5, padding: 5, margin:5 }}>
+          {y}
+        </Text>
+        </TouchableOpacity>
+      ))}
+
+    </View>
+      <View style={{alignItems:'center' }}>
+      <TouchableOpacity onPress={()=>console.log(clickedItems)} style={styles.btn}>
+        <Text style={styles.btnText}>Show All The Clicked Items</Text>
+      </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+export default App;
+
+const styles= StyleSheet.create({
+  btn:{
+    borderRadius:5,
+    borderWidth:0.5,
+    backgroundColor:'#f1f1f1',
+    padding:5,
+    width:200
+
+  },
+  btnText: {
+    textAlign:'center'
+  }
+})
+
+```
+
 ## Custom Button Example
 ```js
 import {
