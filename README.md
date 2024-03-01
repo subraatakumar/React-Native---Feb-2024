@@ -27,6 +27,15 @@
 - TextInput in React Native
 
 ## Day 04: React Native Elements - 2
+
+- Image in React Native
+  - Image Props
+  - Simple Gallery
+- Showing list of items using map
+- ScrollView
+  - Horizontal and Vertical Scrollview
+  - Pull to Refresh
+
 ## Day 05: React Native Elements - 3
 ## Day 06: Navigation in React Native
 ## Day 07: Advance Navigation in React Native
