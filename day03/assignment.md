@@ -3,7 +3,7 @@
 - Stopwatch with editable start time and editable max time to reset
 - use of pressable instead of button
 
-(Or)
+(If completed and still you have time then try to complete the below as well.)
 
 # Create a Sign-In Page
 
