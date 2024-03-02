@@ -1,3 +1,10 @@
+# Create a Stop Watch
+
+- Stopwatch with editable start time and editable max time to reset
+- use of pressable instead of button
+
+(Or)
+
 # Create a Sign-In Page
 
 # Tasks
