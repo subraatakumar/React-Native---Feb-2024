@@ -63,185 +63,21 @@ In React Native, you can use the FlatList component to render a long list of dat
 - listFooterComponent:
 - listEmptyComponent: 
 
-```js
-import React, {useState} from 'react'
-import {View, Text, StyleSheet, RefreshControl, FlatList} from 'react-native'
-import  Constants  from 'expo-constants'
-
-const App = () => {
-  const [data, setData] = useState([])
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = () => {
-    setRefreshing(true) ;
-    setData(prev => [...prev, 'Task no: '+Math.ceil(Math.random()*100)]);
-    setRefreshing(false);
-  }
-  return(
-    <View style={styles.container}>
-      <Text style={styles.heading}>List of Tasks</Text>
-      <FlatList
-      refreshControl={<RefreshControl 
-          refreshing={refreshing} 
-          onRefresh={onRefresh} 
-          colors={['red']} 
-          tintColor='green' />}
-      data={data}
-      renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-      keyExtractor={(_, index) => index.toString() }
-      numColumns={2}
-      ItemSeparatorComponent={() => <View style={styles.separator}></View>}
-      ListHeaderComponent={() => <Text style={{textAlign:'center'}}>This is header of FlatList</Text>}
-      ListFooterComponent={() => <Text  style={{textAlign:'center'}}>This is footer of FlatList</Text>}
-      ListEmptyComponent={() => <Text style={{textAlign:'center'}}>No Items in list</Text>}
-
-      />
-  </View>)
-}
-
-export default App;
-
-const styles = StyleSheet.create({
-  container :{
-    marginTop: Constants.statusBarHeight
-  },
-  item : {
-    flex:1,
-    borderRadius:10,
-    borderWidth:1,
-    borderColor:'#006666',
-    padding:5,
-    margin:5,
-  },
-  heading : {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign:'center'
-  },
-  separator:{
-    flex:1,
-    borderColor:'#006666',
-    borderBottomWidth:2,
-    margin:10
-  }
-})
-```
-
 ## Section List in React Native
 
-```js
-import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, SectionList, StatusBar } from "react-native";
+A performant interface for rendering sectioned lists, supporting the most handy features:
 
-const DATA = [
-  {
-    category: "Mobile Phones",
-    data: ["Galaxy s22", "Xiomi 12 Pro", "I-Phone 15"]
-  },
-  {
-    category: "Refrigerators",
-    data: ["Haier Single Door", "LG Double Door", "Godrej Single Door"]
-  },
-  {
-    category: "Dresses",
-    data: ["Lymio Multi Color", "Toplot Black Dress", "Keri Perry"]
-  },
-];
+- Fully cross-platform.
+- Configurable viewability callbacks.
+- List header support.
+- List footer support.
+- Item separator support.
+- Section header support.
+- Section separator support.
+- Heterogeneous data and item rendering support.
+- Pull to Refresh.
+- Scroll loading.
 
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <SectionList
-      sections={DATA}
-      keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => <View style={styles.item}>
-                                  <Text style={styles.title}>{item}</Text>
-                                </View>}
-      renderSectionHeader={({ section: { category } }) => (
-        <Text style={styles.header}>{category}</Text>
-      )}
-    />
-  </SafeAreaView>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    marginHorizontal: 16
-  },
-  item: {
-    backgroundColor: "#006666",
-    padding: 20,
-    marginVertical: 8,
-    flexDirection:'row'
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: "#fff"
-  },
-  title: {
-    fontSize: 24
-  }
-});
-
-export default App;
-```
-
-## SectionList with Columns
-
-```js
-import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, SectionList, StatusBar, FlatList } from "react-native";
-
-const DATA = [
-  {
-    category: "Mobile Phones",
-    data: [{list:["Galaxy s22", "Xiomi 12 Pro", "I-Phone 15"]}]
-  },
-  {
-    category: "Refrigerators",
-    data: [{list:["Haier Single Door", "LG Double Door", "Godrej Single Door"]}]
-  },
-  {
-    category: "Dresses",
-    data: [{list:["Lymio Multi Color", "Toplot Black Dress", "Keri Perry"]}]
-  },
-];
-
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <SectionList
-      sections={DATA}
-      keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => < FlatList horizontal data={item.list} renderItem={({item})=><Text style={styles.item}>{item}</Text>}/>}
-      renderSectionHeader={({ section: { category } }) => (
-        <Text style={styles.header}>{category}</Text>
-      )}
-    />
-  </SafeAreaView>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    marginHorizontal: 16
-  },
-  item: {
-    backgroundColor: "#006666",
-    padding: 20,
-    marginVertical: 8,
-    flexDirection:'row',
-    margin:10
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: "#fff"
-  }
-});
-
-export default App;
-```
 
 Note: Remember FlatList and SectionList both are PureComponents which means that it will not re-render if props remain shallow-equal.
 
