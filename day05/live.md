@@ -1,3 +1,50 @@
+# Image Background Example
+
+```js
+import React from 'react';
+import { ImageBackground, StyleSheet, Text, View , Button} from 'react-native';
+
+const image = {
+  uri: 'https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105_1280.png',
+};
+
+const App = () => (
+  <View style={styles.container}>
+    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <View style={styles.insideContainer}>
+        <Text style={styles.text}>App With background Image</Text>
+        <View style={{flexDirection:'row', justifyContent:'center', gap:20}}>
+         <Button title="Ok" /> <Button title="Cancel" /> 
+        </View>
+      </View>
+    </ImageBackground>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  insideContainer:{
+    backgroundColor: '#000000c0',
+    padding:40
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'white',
+    fontSize: 42,
+    lineHeight: 84,
+    fontWeight: 'bold',
+    textAlign: 'center',
+
+  },
+});
+
+export default App;
+```
 # Linking Example
 
 ```js
