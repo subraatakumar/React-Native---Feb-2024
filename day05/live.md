@@ -191,3 +191,80 @@ const styles = StyleSheet.create({
 
 export default App;
 ```
+
+## Section List With Columns
+
+```js
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  SectionList,
+  StatusBar,
+  FlatList,
+} from 'react-native';
+
+const DATA = [
+  {
+    title: 'Main dishes',
+    data: [{ list: ['Pizza', 'Burger', 'Risotto'] }],
+  },
+  {
+    title: 'Sides',
+    data: [{ list: ['French Fries', 'Onion Rings', 'Fried Shrimps'] }],
+  },
+  {
+    title: 'Drinks',
+    data: [{ list: ['Water', 'Coke', 'Beer'] }],
+  },
+  {
+    title: 'Desserts',
+    data: [{ list: ['Cheese Cake', 'Ice Cream'] }],
+  },
+];
+
+const App = () => (
+  <SafeAreaView style={styles.container}>
+    <SectionList
+      sections={DATA}
+      keyExtractor={(item, index) => item + index}
+      renderItem={({ item }) => (
+        <FlatList
+          data={item.list}
+          numColumns={2}
+          renderItem={({ item }) => (
+            <Text
+              style={{
+                flex: 1,
+                backgroundColor: 'red',
+                padding: 10,
+                marginHorizontal: 10,
+                marginVertical: 2,
+              }}>
+              {item}
+            </Text>
+          )}
+        />
+      )}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={{ textAlign: 'center', fontSize: 24, color: 'green' }}>
+          {title}
+        </Text>
+      )}
+    />
+  </SafeAreaView>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+    marginHorizontal: 16,
+  },
+});
+
+export default App;
+```
+
