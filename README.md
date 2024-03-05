@@ -37,6 +37,16 @@
   - Pull to Refresh
 
 ## Day 05: React Native Elements - 3
+
+- Image in React Native
+  - Image Props
+  - Simple Gallery
+- FlatList
+- Pull to Refresh flatlist
+- NestedList/Section List
+- SectionList with Columns
+- Linking
+
 ## Day 06: Navigation in React Native
 ## Day 07: Advance Navigation in React Native
 ## Day 08: API Integration in React Native
