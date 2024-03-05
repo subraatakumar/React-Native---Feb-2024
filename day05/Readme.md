@@ -1,5 +1,6 @@
 # Day05: React Native Elements - 3
 
+## Lecture
 - Image in React Native
   - Image Props
   - Simple Gallery
