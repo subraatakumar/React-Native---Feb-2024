@@ -1,317 +1,154 @@
-# Image Background Example
+## Basic Stack Screen Example
 
 ```js
-import React from 'react';
-import { ImageBackground, StyleSheet, Text, View , Button} from 'react-native';
-
-const image = {
-  uri: 'https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105_1280.png',
+// App.js
+import { View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import MyStack from './MyStack';
+const App = () => {
+  return (
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
+  );
 };
-
-const App = () => (
-  <View style={styles.container}>
-    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-      <View style={styles.insideContainer}>
-        <Text style={styles.text}>App With background Image</Text>
-        <View style={{flexDirection:'row', justifyContent:'center', gap:20}}>
-         <Button title="Ok" /> <Button title="Cancel" /> 
-        </View>
-      </View>
-    </ImageBackground>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  insideContainer:{
-    backgroundColor: '#000000c0',
-    padding:40
-  },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'white',
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: 'bold',
-    textAlign: 'center',
-
-  },
-});
 
 export default App;
 ```
-# Linking Example
 
 ```js
-import React, { useCallback } from 'react';
-import { Alert, Button, Linking, StyleSheet, View } from 'react-native';
+// MyStack.js
+import { createStackNavigator } from '@react-navigation/stack';
+import { Text, TouchableOpacity, View, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
 
-const supportedURL =
-  'https://play.google.com/store/apps/details?id=com.Slack&hl=en&gl=US';
-  const whatsAppUrl = "https://wa.me/+919999988888?text=Hi, Contacting from your app"
+const Stack = createStackNavigator();
 
-const unsupportedURL = 'slack://open?team=123456';
-
-const OpenURLButton = ({ url, children }) => {
-  const handlePress = useCallback(async () => {
-    // Checking if the link is supported for links with custom URL scheme.
-    const supported = await Linking.canOpenURL(url);
-
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
-      await Linking.openURL(url);
-    } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
-    }
-  }, [url]);
-
-  return <Button title={children} onPress={handlePress} />;
-};
-
-const App = () => {
+const Screen1 = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <OpenURLButton url={supportedURL}>Please Rate Us</OpenURLButton>
-      <OpenURLButton url={whatsAppUrl}>Whats app us</OpenURLButton>
-      <OpenURLButton url={unsupportedURL}>Open Unsupported URL</OpenURLButton>
+    <View>
+      <Text>Screen One</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Notifications')}
+        style={styles.btn}>
+        <Text style={styles.btnText}>Goto Notifications</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const Screen2 = () => {
+  return <Text>Screen Two</Text>;
+};
 
-export default App;
-```
-
-# FlatList Example
-
-```js
-import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-} from 'react-native';
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Fourth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Fifth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Sixth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Seventh Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Eighth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Nineth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Tenth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Eleventh Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Tweleveth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Thirteenth Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Fourteenth Item',
-  },
-];
-
-const Data1 = [];
-
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
-
-const App = () => {
+const Screen3 = ({ navigation }) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        numColumns={3}
-        ItemSeparatorComponent={() => (
-          <View
-            style={{
-              height: 10,
-              width: '100%',
-              backgroundColor: 'green',
-            }}></View>
-        )}
-        ListHeaderComponent={() => (
-          <View
-            style={{
-              width: '100%',
-              padding: 30,
-              backgroundColor: 'green',
-            }}>
-            <Text style={{ color: '#FFFFFF', fontSize: 45, textAlign:'center' }}>
-              This is Header
-            </Text>
-          </View>
-        )}
-        ListEmptyComponent={() => (
-          <View
-            style={{
-              width: '100%',
-              padding: 30
-            }}>
-            <Text style={{ color: 'red', fontSize: 45, textAlign:'center' }}>
-              List is Empty 
-            </Text>
-          </View>
-        )}
-        renderItem={({ item }) => <Item title={item.title} />}
-        keyExtractor={(item) => item.id}
-      />
-    </SafeAreaView>
+    <ImageBackground source={{uri:"https://cdn.pixabay.com/photo/2017/12/13/16/40/background-3017167_1280.jpg"}} style={{flex:1}}>
+      <Text>Screen Three</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Settings')}
+        style={styles.btn}>
+        <Text style={styles.btnText}>Goto Settings</Text>
+      </TouchableOpacity>
+    </ImageBackground>
   );
 };
 
+const Screen4 = ({ navigation }) => {
+  return (
+    <ImageBackground source={{uri:"https://cdn.pixabay.com/photo/2020/06/20/16/20/orange-5321552_1280.jpg"}} style={{flex:1}}>
+    <SafeAreaView style={{flex:1, marginTop:60, justifyContent:'center', alignItems:'center'}}>
+      <Text style={{fontSize:25, color:'red', fontWeight:'bold', textAlign:'center'}}>Login Screen</Text>
+      <TouchableOpacity
+        onPress={() => navigation.replace('Home')}
+        style={styles.btn}>
+        <Text style={styles.btnText}>Login</Text>
+      </TouchableOpacity>
+      </SafeAreaView>
+    </ImageBackground>
+  );
+};
+
+const MyStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={Screen4} options={{headerShown: false}}/>
+      <Stack.Screen name="Home" component={Screen1} />
+      <Stack.Screen name="Settings" component={Screen2} />
+      <Stack.Screen name="Notifications" component={Screen3} />
+    </Stack.Navigator>
+  );
+};
+
+export default MyStack;
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    flex:1,
-    backgroundColor: '#f9c2ff',
+  btn: {
     padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    margin: 40,
+    borderRadius: 40,
+    backgroundColor: '#4287f5',
+    width:150,
   },
-  title: {
-    fontSize: 15,
+  btnText: {
+    color: '#FFFFFF',
+    textAlign: 'center',
   },
 });
-
-export default App;
 ```
 
-## Section List With Columns
+## Bottom Tab Navigation
 
 ```js
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  SectionList,
-  StatusBar,
-  FlatList,
-} from 'react-native';
+import * as React from 'react';
+import { Text, View, ImageBackground, TouchableOpacity, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AntDesign } from '@expo/vector-icons';
 
-const DATA = [
-  {
-    title: 'Main dishes',
-    data: [{ list: ['Pizza', 'Burger', 'Risotto'] }],
-  },
-  {
-    title: 'Sides',
-    data: [{ list: ['French Fries', 'Onion Rings', 'Fried Shrimps'] }],
-  },
-  {
-    title: 'Drinks',
-    data: [{ list: ['Water', 'Coke', 'Beer'] }],
-  },
-  {
-    title: 'Desserts',
-    data: [{ list: ['Cheese Cake', 'Ice Cream'] }],
-  },
-];
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home!</Text>
+    </View>
+  );
+}
 
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <SectionList
-      sections={DATA}
-      keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => (
-        <FlatList
-          data={item.list}
-          numColumns={2}
-          renderItem={({ item }) => (
-            <Text
-              style={{
-                flex: 1,
-                backgroundColor: 'red',
-                padding: 10,
-                marginHorizontal: 10,
-                marginVertical: 2,
-              }}>
-              {item}
-            </Text>
-          )}
-        />
-      )}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text style={{ textAlign: 'center', fontSize: 24, color: 'green' }}>
-          {title}
-        </Text>
-      )}
-    />
-  </SafeAreaView>
-);
+function SettingsScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Settings!</Text>
+    </View>
+  );
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    marginHorizontal: 16,
-  },
-});
+const Screen3 = () => {
+  return (
+    <ImageBackground source={{uri:"https://cdn.pixabay.com/photo/2017/12/13/16/40/background-3017167_1280.jpg"}} style={{flex:1}}>
+      <Text>Screen Three</Text>
+    </ImageBackground>
+  );
+};
 
-export default App;
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator screenOptions={{
+      tabBarActiveTintColor: 'red',
+      tabBarInactiveTintColor: 'green'
+    }}>
+      <Tab.Screen name="Home" component={HomeScreen} options={{tabBarShowLabel: false, tabBarIcon: ({color, size}) => <AntDesign name="home" size={size} color={color} />}} />
+      <Tab.Screen name="Settings" component={SettingsScreen}  options={{tabBarShowLabel: false, tabBarIcon: ({color, size}) => <AntDesign name="setting" size={size} color={color} />}}/>
+      <Tab.Screen name="Screen3" component={Screen3} options={{tabBarShowLabel: false, tabBarIcon: ({color, size}) => <AntDesign name="linechart" size={size} color={color}/>}} />
+    </Tab.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
+  );
+}
 ```
-
