@@ -48,6 +48,17 @@
 - Linking
 
 ## Day 06: Navigation in React Native
+
+- React Native Architecture
+  - old architecture
+  - new architecture
+  - difference
+- React Nagivation
+  - Importance of React Nagivation
+  - Types of React Navigation
+  - Stack Navigation
+  - Bottom Tab Navigation
+
 ## Day 07: Advance Navigation in React Native
 ## Day 08: API Integration in React Native
 ## Day 09: Persist in React Native
