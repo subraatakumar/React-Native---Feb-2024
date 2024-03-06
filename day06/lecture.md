@@ -1,249 +1,120 @@
-# Image in React Native
+## React Native Architecture
 
-A React component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk, such as the camera roll.
+When we look at the react native architecture we find two different divisions often interact with each other :
+
+- native world (Android or IOS)
+- JavaScript world
+
+Communication between these two worlds happens via React Native Bridge. React Native parses the bunch of commands coming from the React world into a JSON array, serializes it as a string, and then transfers it to the native world via that bridge.
+
+To maintain consistency across all platforms, React Native implements the actual layout by converting React-based display styles (eg, flex) to the relative position values where each element is to be structured and then finally passes it over the UI layer of the native world. Broadly speaking, the current React Native architecture is based on 3 major threads-
+
+- `Main/Native/UI thread` — where all the UI elements are rendered and native code is executed.
+- `Layout thread/Shadow Thread` — this is a background thread where the actual layout is calculated. As mentioned, it recasts the flexbox layout with the help of Facebook’s layout engine called Yoga.
+- `JavaScript thread` — this thread is responsible for executing and compiling all the JavaScript-related code or business logic.
+
+![](https://firebasestorage.googleapis.com/v0/b/mymasai-school.appspot.com/o/project_files%2Fold_architecture.webp?alt=media&token=968b1e3f-a715-447f-b9a7-e3dc152c0aea)
+
+## The drawbacks of this architecture
+
+- In the current architecture, communication between threads occurs through the bridge so it leads to a slow transfer rate and unnecessary copying of data.
+- Since the communication happens asynchronously, one major drawback of this asynchronous approach is that it doesn’t execute the events in real-time instead it schedules the action. Let’s imagine a scenario where we implemented a Flatlist and when we start scrolling, each time an event is triggered and is scheduled for its execution. So, when dealing with a large set of list items and scrolling rapidly one can easily notice a white glitch before actual rendering happens. This happens because the UI layer of that native world hasn’t received any layout information by the time scrolling is completed. So this scrolling effect needs to take place synchronously to achieve the desired result which is not possible in the current architecture.
+
+# The new architecture
+
+Starting from version 0.68, React Native provides the New Architecture, which offers developers new capabilities for building highly performant and responsive apps.
+
+![](https://firebasestorage.googleapis.com/v0/b/mymasai-school.appspot.com/o/project_files%2Fnew_architecture.webp?alt=media&token=cff47435-c289-4bb3-b89e-fe0aa99e70e2)
+
+The New Architecture dropped the concept of The Bridge in favor of another communication mechanism: the JavaScript Interface (JSI). The JSI is an interface that allows a JavaScript object to hold a reference to a C++ and viceversa.
+
+Once an object has a reference to the other one, it can directly invoke methods on it. So, for example, a C++ object can now ask a JavaScript object to execute a method in the JavaScript world and viceversa.
+
+This idea allowed to unlock several benefits:
+
+- `Synchronous execution:` it is now possibile to execute synchronously those functions that should not have been asynchronous in the first place.
+- `Concurrency:` it is possible from JavaScript to invoke functions that are executed on different thread.
+- `Lower overhead:` the New Architecture don't have to serialize/deserialize the data anymore, therefore there are no serialization taxes to pay.
+- `Code sharing:` by introducing C++, it is now possible to abstract all the platform agnostic code and to share it with ease between the platforms.
+- `Type safety:` to make sure that JS can properly invoke methods on C++ objects and viceversa, a layer of code automatically generated has been added. The code is generated starting from some JS specification that must be typed through Flow or TypeScript.
+
+# React Navigation
+
+Navigating through screens in a React Native app can be tricky. Initially, React Native had its own way of handling this, but it was later replaced by a library called react-navigation.
+
+The challenges come from the fact that iOS and Android handle navigation differently. iOS uses view controllers, and Android uses activities. These are like behind-the-scenes tools that work differently and look different to users. React Native navigation libraries try to make things look right on each platform while giving developers a consistent way to work with it using JavaScript.
+
+Another problem is that the special tools for navigating on mobile don't match up neatly with the regular things developers use in React Native, like View, Text, and Image. It's not always clear how to connect these tools to JavaScript.
+
+Unlike web apps, where going to a new URL takes you to a new page, mobile apps remember where you've been. You can go back to previous screens, and you might even see the same screen more than once.
+
+Because of these challenges, there isn't one perfect way to do navigation in React Native. That's why it was taken out of the main React Native package.
+
+## Implementation of React Navigation
+
+The `react-navigation` documentation explains how to install the required dependencies, based on your React Native setup.
+
+After that, we need to do 5 things:
+
+- Set up a <NavigationContainer> from @react-navigation/native
+- Create a navigator:
+  - createStackNavigator from @react-navigation/stack
+  - createBottomTabNavigator from @react-navigation/bottom-tabs
+  - createDrawerNavigator from @react-navigation/drawer
+- Define the screens in our app
+- Wrap all your screens in navigator
+- Wrap the navigator in navigation container
+
+## Stack navigator
+
+In React Native, stack navigation refers to a navigation pattern where screens are organized in a stack-like structure. This means that screens are placed on top of each other, and you navigate through them by adding or removing screens from the stack.
+
+The most common use case for stack navigation is handling the flow of screens in a way that resembles a "stack" or a pile of cards. When you navigate to a new screen, it gets added to the top of the stack. If you go back, the top screen is removed, revealing the screen beneath it. This mimics the behavior of a physical stack of objects.
+
+Stack navigation is well-suited for scenarios where you have a linear flow of screens, such as moving from a login screen to a dashboard and then to a details screen. It follows a Last In, First Out (LIFO) approach, where the last screen added to the stack is the first one to be removed when navigating back.
 
 ```js
-import React from 'react'
-import { View, Image, StyleSheet } from 'react-native'
-import snackIcon from './assets/snack-icon.png'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
-const App = () => {
-  return(<View>
-    <Image source={{uri:"https://cdn.pixabay.com/photo/2021/11/22/05/02/dalmatian-6815838_960_720.jpg"}} style={styles.roundImage}/>
-    <Image source={require('./assets/snack-icon.png')} style={styles.squareImage}/>
-    <Image source={snackIcon} style={styles.squareImage}/>
-  </View>)
+const Root = createStackNavigator()
+
+const Screen1 = ({ navigation, route }) => {
+  return <Text>Screen1</Text>
 }
 
-export default App;
-
-const styles = StyleSheet.create({
-  squareImage : {
-    width:100,
-    height:100,
-    borderRadius:10  
-  },
-  roundImage: {
-    width:100,
-    height:100,
-    borderRadius:'50%'  
-  }
-})
-
-```
-
-### Image Props
-
-- source: specifies source of the image
-- resizeMode: Determines how to resize the image when the frame doesn't match the raw image dimensions.
-    Value of this prop can be any one of the following. The default is `cover`
-  - cover: Scale the image uniformly (maintain the image's aspect ratio) so that both dimensions (width and height) of the image will be equal to or larger than the corresponding dimension of the view (minus padding). at least one dimension of the scaled image will be equal to the corresponding dimension of the view (minus padding). 
-  - contain: Scale the image uniformly (maintain the image's aspect ratio) so that both dimensions (width and height) of the image will be equal to or less than the corresponding dimension of the view (minus padding).
-  - stretch: Fit the width and height of image to mentioned width and height, This may change the aspect ratio.
-  - repeat: Repeat the image to cover the frame of the view. The image will keep its size and aspect ratio, unless it is larger than the view, in which case it will be scaled down uniformly so that it is contained in the view.
-  - center: Center the image in the view along both dimensions. If the image is larger than the view, scale it down uniformly so that it is contained in the view.
-
-# [ImageBackground](https://reactnative.dev/docs/imagebackground)
-
-# [Linking](https://reactnative.dev/docs/linking)
-
-Linking gives you a general interface to interact with both incoming and outgoing app links.
-
-# FlatList in React Native
-
-In React Native, you can use the FlatList component to render a long list of data. It renders only the items shown on the screen in a scrolling list and not all the data at once. To render a scrollable list of items using FlatList , you need to pass the required data prop to the component. The other props are self explanatory.
-
-- data: array of items
-- renderItem: a function that returns a JSX for a single item.
-- keyExtractor: extracts key from data. But remember that it should be a string.
-- numColumns: number of columns
-- horizontal: show horizontal list
-- itemSeparatorComponent:
-- listHeaderComponent:
-- listFooterComponent:
-- listEmptyComponent: 
-
-```js
-import React, {useState} from 'react'
-import {View, Text, StyleSheet, RefreshControl, FlatList} from 'react-native'
-import  Constants  from 'expo-constants'
-
-const App = () => {
-  const [data, setData] = useState([])
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = () => {
-    setRefreshing(true) ;
-    setData(prev => [...prev, 'Task no: '+Math.ceil(Math.random()*100)]);
-    setRefreshing(false);
-  }
-  return(
-    <View style={styles.container}>
-      <Text style={styles.heading}>List of Tasks</Text>
-      <FlatList
-      refreshControl={<RefreshControl 
-          refreshing={refreshing} 
-          onRefresh={onRefresh} 
-          colors={['red']} 
-          tintColor='green' />}
-      data={data}
-      renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-      keyExtractor={(_, index) => index.toString() }
-      numColumns={2}
-      ItemSeparatorComponent={() => <View style={styles.separator}></View>}
-      ListHeaderComponent={() => <Text style={{textAlign:'center'}}>This is header of FlatList</Text>}
-      ListFooterComponent={() => <Text  style={{textAlign:'center'}}>This is footer of FlatList</Text>}
-      ListEmptyComponent={() => <Text style={{textAlign:'center'}}>No Items in list</Text>}
-
-      />
-  </View>)
+const Screen2 = ({ navigation, route }) => {
+  return <Text>Screen2</Text>
 }
 
-export default App;
+const Screen3 = ({ navigation, route }) => {
+  return <Text>Screen3</Text>
+}
 
-const styles = StyleSheet.create({
-  container :{
-    marginTop: Constants.statusBarHeight
-  },
-  item : {
-    flex:1,
-    borderRadius:10,
-    borderWidth:1,
-    borderColor:'#006666',
-    padding:5,
-    margin:5,
-  },
-  heading : {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign:'center'
-  },
-  separator:{
-    flex:1,
-    borderColor:'#006666',
-    borderBottomWidth:2,
-    margin:10
-  }
-})
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Root.Navigator>
+        <Root.Screen name="Screen1" component={Screen1} />
+        <Root.Screen name="Screen2" component={Screen2} />
+        <Root.Screen name="Screen3" component={Screen3} />
+      </Root.Navigator>
+    </NavigationContainer>
+  )
+}
 ```
+## Bottom Tab Navigator
 
-## Section List in React Native
+In React Native, a bottom tab navigator is a navigation pattern that typically uses a tab bar located at the bottom of the screen to allow users to switch between different screens or tabs within an app. Each tab represents a specific section or functionality of the application.
 
-```js
-import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, SectionList, StatusBar } from "react-native";
+Key features of a bottom tab navigator include:
 
-const DATA = [
-  {
-    category: "Mobile Phones",
-    data: ["Galaxy s22", "Xiomi 12 Pro", "I-Phone 15"]
-  },
-  {
-    category: "Refrigerators",
-    data: ["Haier Single Door", "LG Double Door", "Godrej Single Door"]
-  },
-  {
-    category: "Dresses",
-    data: ["Lymio Multi Color", "Toplot Black Dress", "Keri Perry"]
-  },
-];
+- **Tab Bar:** The tabs are visually represented by a bar at the bottom of the screen, displaying icons or labels for each tab. Users can tap on these tabs to navigate to the associated screens.
 
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <SectionList
-      sections={DATA}
-      keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => <View style={styles.item}>
-                                  <Text style={styles.title}>{item}</Text>
-                                </View>}
-      renderSectionHeader={({ section: { category } }) => (
-        <Text style={styles.header}>{category}</Text>
-      )}
-    />
-  </SafeAreaView>
-);
+- **Persistent UI:** The tab bar usually remains visible at the bottom of the screen, providing a persistent and easily accessible way for users to move between different sections of the app.
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    marginHorizontal: 16
-  },
-  item: {
-    backgroundColor: "#006666",
-    padding: 20,
-    marginVertical: 8,
-    flexDirection:'row'
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: "#fff"
-  },
-  title: {
-    fontSize: 24
-  }
-});
+- **Independent Content:** Each tab typically corresponds to an independent view or screen. When users switch tabs, they navigate to a different part of the app, and the content on the screen changes accordingly.
 
-export default App;
-```
-
-## SectionList with Columns
-
-```js
-import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, SectionList, StatusBar, FlatList } from "react-native";
-
-const DATA = [
-  {
-    category: "Mobile Phones",
-    data: [{list:["Galaxy s22", "Xiomi 12 Pro", "I-Phone 15"]}]
-  },
-  {
-    category: "Refrigerators",
-    data: [{list:["Haier Single Door", "LG Double Door", "Godrej Single Door"]}]
-  },
-  {
-    category: "Dresses",
-    data: [{list:["Lymio Multi Color", "Toplot Black Dress", "Keri Perry"]}]
-  },
-];
-
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <SectionList
-      sections={DATA}
-      keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => < FlatList horizontal data={item.list} renderItem={({item})=><Text style={styles.item}>{item}</Text>}/>}
-      renderSectionHeader={({ section: { category } }) => (
-        <Text style={styles.header}>{category}</Text>
-      )}
-    />
-  </SafeAreaView>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    marginHorizontal: 16
-  },
-  item: {
-    backgroundColor: "#006666",
-    padding: 20,
-    marginVertical: 8,
-    flexDirection:'row',
-    margin:10
-  },
-  header: {
-    fontSize: 32,
-    backgroundColor: "#fff"
-  }
-});
-
-export default App;
-```
-
-Note: Remember FlatList and SectionList both are PureComponents which means that it will not re-render if props remain shallow-equal.
-
+Bottom tab navigation is commonly used in mobile applications where there are distinct and separate sections that users frequently access. Examples of tabs might include Home, Explore, Notifications, and Profile.
 
 
