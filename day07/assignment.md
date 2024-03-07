@@ -1,4 +1,4 @@
-Create Lnkedin Skeleton
+## Create Lnkedin Skeleton
  - Create Bottom Tab with Icons. 
  - Use 5 to 10 Sample Notifications of Three different types (It should be dynamic)
  - On Drawer Navigation Show an profile image
