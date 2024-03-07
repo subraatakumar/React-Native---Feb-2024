@@ -3,6 +3,7 @@
 - Advanced Bottom Tab Navigator
   - Custom Header
   - Custom Navigation Icons
+  - Pass data from one navigation screen to another
   - Custom Style
 - Drawer Navigation
 - Complicated Combined Navigator
