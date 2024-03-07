@@ -10,3 +10,5 @@
 - Basic Example of Combined Navigator
 
 ## Assignment
+
+- Create a bottom tab with drawer navigation and flatlist implemented.
