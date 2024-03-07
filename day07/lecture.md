@@ -28,3 +28,8 @@ Here's a breakdown of drawer navigation in React Native:
 - You can customize the appearance and behavior of the drawer using various props and options provided by the library.
 
 Overall, drawer navigation is a valuable tool for creating user-friendly and well-organized React Native apps.
+
+# Methods for Passing Data Between Navigation Screens in React Native:
+
+1. Prop Drilling (Pros: Simple, Cons: Can become cumbersome and error-prone):
+2. Create a React Context to manage shared data across multiple screens. (Pros: Centralized state management, Cons: Overhead for simple data):
