@@ -60,6 +60,14 @@
   - Bottom Tab Navigation
 
 ## Day 07: Advance Navigation in React Native
+- Advanced Bottom Tab Navigator
+  - Custom Header
+  - Custom Navigation Icons
+  - Pass data from one navigation screen to another
+  - Custom Style
+- Drawer Navigation
+- Complicated Combined Navigator
+  
 ## Day 08: API Integration in React Native
 ## Day 09: Persist in React Native
 ## Day 10: Central Store in React Native
