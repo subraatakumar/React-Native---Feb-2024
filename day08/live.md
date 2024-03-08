@@ -32,7 +32,7 @@ const App = () => {
         <Text style={styles.textStyle}>Show Modal</Text>
       </Pressable>
       <Pressable
-        style={[styles.button, styles.buttonOpen]}
+        style={[styles.button, styles.buttonOpen,{marginTop:20}]}
         onPress={() => console.log("Second button clicked")}>
         <Text style={styles.textStyle}>Second Button</Text>
       </Pressable>
