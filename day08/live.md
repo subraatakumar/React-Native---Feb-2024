@@ -96,3 +96,10 @@ const styles = StyleSheet.create({
 
 export default App;
 ```
+
+- To dismis modal on back pressed on android device
+
+```js
+onRequestClose={() =>{}}
+```
+
