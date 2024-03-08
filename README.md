@@ -69,6 +69,16 @@
 - Complicated Combined Navigator
   
 ## Day 08: API Integration in React Native
+- Modal
+- Alert
+- Switch
+- Check Box
+- Radio Button
+- Dropdown
+- Networking
+  - Axios
+    - Get
+    - Post
 ## Day 09: Persist in React Native
 ## Day 10: Central Store in React Native
 ## Day 11: Social Media Authentication
