@@ -12,10 +12,7 @@ const App = () => {
         animationType="none"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
+>
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Hello World!</Text>
@@ -97,9 +94,12 @@ const styles = StyleSheet.create({
 export default App;
 ```
 
-- To dismis modal on back pressed on android device
+- To dismis modal on back pressed on android device please use `onRequestClose` prop.
 
 ```js
-onRequestClose={() =>{}}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}
 ```
 
