@@ -1,19 +1,29 @@
 # AsyncStorage
 
 ```js
-import { useState, useEffect } from 'react';
+// Custom Hook : useAsyncStorage
+import {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const useAsyncStorage = (key) => {
+const isJSON = str => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};
+
+const useAsyncStorage = key => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const value = await AsyncStorage.getItem(key);
-        setData(value ? JSON.parse(value) : null); // Parse retrieved JSON
+        const data = await AsyncStorage.getItem(key);
+        data && isJSON(data) ? setData(JSON.parse(data)) : setData(data || '');
       } catch (err) {
         setError(err);
       } finally {
@@ -24,9 +34,10 @@ const useAsyncStorage = (key) => {
     getData();
   }, [key]); // Re-run only if `key` changes
 
-  const setValue = async (value) => {
+  const setValue = async value => {
     try {
-      const stringValue = JSON.stringify(value); // Stringify for storage
+      const stringValue =
+        typeof value == 'string' ? value : JSON.stringify(value); // Stringify for storage
       await AsyncStorage.setItem(key, stringValue);
       setData(value); // Update local state for immediate feedback
     } catch (err) {
@@ -34,19 +45,23 @@ const useAsyncStorage = (key) => {
     }
   };
 
-  return { data, loading, error, setValue };
+  return {data, loading, error, setValue};
 };
 
 export default useAsyncStorage;
 ```
 
 ```js
-const MyComponent = () => {
-  const { data, loading, error, setValue } = useAsyncStorage('myDataKey');
+// App.js
+import {Button, Text, View} from 'react-native';
+import useAsyncStorage from './src/customHook/useAsyncStorage';
+
+const App = () => {
+  const {data, loading, error, setValue} = useAsyncStorage('myDataKey');
 
   // Handle loading, error, and data states
   if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error: {error.message}</Text>;
+  if (error.trim().length != 0) return <Text>Error: {error}</Text>;
 
   // Use the data
   return (
@@ -56,6 +71,8 @@ const MyComponent = () => {
     </View>
   );
 };
+
+export default App;
 ```
 
 # Realm
