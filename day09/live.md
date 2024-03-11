@@ -67,7 +67,7 @@ export default App;
 ## AsyncStorage using Custom Hook
 
 ```js
-// Custom Hook : useAsyncStorage
+// useAsyncStorage custom hook
 import {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -111,7 +111,7 @@ const useAsyncStorage = key => {
     }
   };
 
-  return {data, loading, error, setValue};
+  return {value: data, loading, error, setValue};
 };
 
 export default useAsyncStorage;
@@ -119,21 +119,60 @@ export default useAsyncStorage;
 
 ```js
 // App.js
-import {Button, Text, View} from 'react-native';
+import {useState} from 'react';
+import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 import useAsyncStorage from './src/customHook/useAsyncStorage';
 
 const App = () => {
-  const {data, loading, error, setValue} = useAsyncStorage('myDataKey');
+  const [textInput, setTextInput] = useState('');
+  const {value, setValue, loading, error} = useAsyncStorage('data');
 
   // Handle loading, error, and data states
   if (loading) return <Text>Loading...</Text>;
-  if (error.trim().length != 0) return <Text>Error: {error}</Text>;
+  if (error.trim().length > 0)
+    return (
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 20,
+          marginTop: 30,
+          color: 'red',
+        }}>
+        Error: {error}
+      </Text>
+    );
 
-  // Use the data
   return (
-    <View>
-      <Text>Data: {data}</Text>
-      <Button title="Set Data" onPress={() => setValue('New Data!')} />
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text style={{fontSize: 34, textAlign: 'center', marginBottom: 40}}>
+        Persist Tutorial
+      </Text>
+      <TextInput
+        value={textInput}
+        onChangeText={setTextInput}
+        style={{
+          borderRadius: 10,
+          padding: 10,
+          borderWidth: 1,
+          width: '80%',
+        }}
+        placeholder="Please enter data"
+      />
+      <TouchableOpacity
+        style={{
+          backgroundColor: 'red',
+          padding: 10,
+          width: '80%',
+          borderRadius: 10,
+          alignSelf: 'center',
+          marginTop: 30,
+        }}
+        onPress={() =>
+          textInput.trim().length == 0 ? null : setValue(textInput)
+        }>
+        <Text style={{color: '#FFF', textAlign: 'center'}}>Set Data</Text>
+      </TouchableOpacity>
+      <Text style={{textAlign: 'center', marginTop: 30}}>Data: {value}</Text>
     </View>
   );
 };
