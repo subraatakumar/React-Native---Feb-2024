@@ -1,6 +1,6 @@
 # Task List part 1
 
-    - User should have the ability to add task to the list
+- User should have the ability to add task to the list
 
 ```js
 npx react-native init SqlExample
