@@ -80,7 +80,13 @@
     - Get
     - Post
 ## Day 09: Persist in React Native
+  - Async Storage
+  - SQLite Databases
+  - Realm
 ## Day 10: Central Store in React Native
+  - Redux toolkit
+    - Persistance in Redux toolkit
+  - Mobx
 ## Day 11: Social Media Authentication
 ## Day 12: Sensor and Location
 ## Day 13: Camera and Text to Speech
