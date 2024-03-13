@@ -18,7 +18,7 @@
 
 ## [use it on Expo](https://rnfirebase.io/#expo)
 
-# Use Firebase Authentication
+# [Use Firebase Authentication](https://rnfirebase.io/auth/usage)
 
 ## [Email and Password Signin](https://rnfirebase.io/auth/usage#emailpassword-sign-in)
 
