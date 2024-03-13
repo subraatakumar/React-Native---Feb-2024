@@ -20,6 +20,15 @@
 
 # [Use Firebase Authentication](https://rnfirebase.io/auth/usage)
 
+
+## Firebase Console Setup
+
+- Goto `All Products` -> `Authentication` -> `Sign In Method` , then choose the methods. For this project select `google` and `email and password`.
+- As you have already created project now add `SHA1` key to it. `Project settings` -> `Add Fingerprint` -> paste `SHA1` -> `SAVE`.
+- If you have not generated `SHA1`, then generate it by `cd android && ./gradlew signingReport`.
+- Download this new `google-services.json` and paste in `android/app` folder.
+
+
 ## [Email and Password Signin](https://rnfirebase.io/auth/usage#emailpassword-sign-in)
 
 ## [Google Signin](https://rnfirebase.io/auth/social-auth#google)
