@@ -6,9 +6,9 @@
 
 - The app should display the current step count on the screen.
 - Optionally, you can include features like:
-- Start/Stop button to control step counting.
-- Displaying elapsed time.
-- Setting daily step goals.
+  - Start/Stop button to control step counting.
+  - Displaying elapsed time.
+  - Setting daily step goals.
 
 ## Submission:
 
