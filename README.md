@@ -88,7 +88,7 @@
     - Persistance in Redux toolkit
   - Mobx
 ## Day 11: Social Media Authentication
-## Day 12: Sensor and Location
-## Day 13: Camera and Text to Speech
+## Day 12: Sensor and Camera
+## Day 13: Location and Text to Speech
 ## Day 14: Important Libraries
 ## Day 15: PSC
