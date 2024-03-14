@@ -13,6 +13,7 @@
 ## Submission:
 
 - Submit your completed project code.
+- Submit link to APK file (optional)
 - Include a short explanation of your design choices and implemented features.
 
 ## Tips:
