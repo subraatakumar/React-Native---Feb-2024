@@ -336,7 +336,31 @@ const styles = StyleSheet.create({
 
 export default MapWithEventsExample;
 ```
+## Example to get Routes from Open Map
 
-
+```js
+  const fetchRoute = async (currentLocation) => {
+    try {
+      if (!currentLocation) {
+        console.error('Current location is not available');
+        return;
+      }
+      const response = await fetch(
+        `https://router.project-osrm.org/route/v1/driving/${currentLocation.longitude},${currentLocation.latitude};${mumbai.longitude},${mumbai.latitude}?overview=full&geometries=geojson`
+      );
+      const data = await response.json();
+      if (data.code === 'Ok' && data.routes.length > 0) {
+        const route = data.routes[0].geometry.coordinates.map(
+          ([longitude, latitude]) => ({ latitude, longitude })
+        );
+        setRouteCoordinates(route);
+      } else {
+        console.error('Error fetching route:', data);
+      }
+    } catch (error) {
+      console.error('Error fetching route:', error);
+    }
+  };
+```
 
 
