@@ -21,11 +21,6 @@ This assignment challenges you to create a resizable and collapsible bottom shee
 - Mastery of animations with react-native-reanimated.
 - Creating reusable and interactive UI components.
 
-## Resources:
-
-- React Native Gesture Handler: https://www.npmjs.com/package/react-native-gesture-handler
-- React Native Reanimated: https://docs.swmansion.com/react-native-reanimated/docs/1.x/nodes/call/
-
 ## Deliverables:
 
 - A functional React Native component representing the draggable bottom sheet.
