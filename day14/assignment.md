@@ -23,8 +23,8 @@ This assignment challenges you to create a resizable and collapsible bottom shee
 
 ## Resources:
 
-React Native Gesture Handler: https://www.npmjs.com/package/react-native-gesture-handler
-React Native Reanimated: https://docs.swmansion.com/react-native-reanimated/docs/1.x/nodes/call/
+- React Native Gesture Handler: https://www.npmjs.com/package/react-native-gesture-handler
+- React Native Reanimated: https://docs.swmansion.com/react-native-reanimated/docs/1.x/nodes/call/
 
 ## Deliverables:
 
