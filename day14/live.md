@@ -31,5 +31,35 @@ const App = () => {
 };
 
 export default App;
+```
 
+# using Animated API
+
+```js
+import React, { useRef } from 'react';
+import { View, TouchableOpacity, Text, Animated } from 'react-native';
+
+const App = () => {
+  const br = useRef(new Animated.Value(50)).current;
+  return (
+    <View>
+      <Animated.View
+        style={{
+          width: 100,
+          height: 100,
+          borderRadius: br,
+          backgroundColor: 'green',
+        }}></Animated.View>
+
+      <TouchableOpacity
+        onPress={() => {
+          Animated.spring(br, { toValue: br._value == 0 ? 50 : 0 }).start();
+        }}>
+        <Text>Change</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default App;
 ```
